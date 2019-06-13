@@ -25,14 +25,15 @@ export class HomeClientePage implements OnInit {
 
   listaDeProduto : Produto[] = [];
 
+  id : string;
 
     constructor(public router : Router,
                 private menu: MenuController,
                 private firebaseauth : AngularFireAuth,
-                public activatedRoute: ActivatedRoute,
-                 ){
-      this.email = this.activatedRoute.snapshot.paramMap.get('user');
 
+                 ){
+  
+        this.id = this.firebaseauth.auth.currentUser.uid;
       
       
     }
@@ -41,14 +42,16 @@ export class HomeClientePage implements OnInit {
 
 
   ngOnInit() {
-      this.obterCliente();
+    
+      //this.obterCliente();
     }
 
     
     obterCliente() {
-      var ref = firebase.firestore().collection("loja").doc(this.email);
+      var ref = firebase.firestore().collection("loja").doc(this.id);
       ref.get().then(doc => {
       this.loja.setDados(doc.data());
+      console.log(doc.data());
       
       }).catch((error) => {
         console.log("Error getting document:", error);

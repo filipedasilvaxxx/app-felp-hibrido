@@ -59,10 +59,10 @@ export class AppComponent {
       .subscribe(
         user => {
           if (user) {
-            this.router.navigate(['/home-cliente', { user: user.email} ]);
+            this.router.navigate(['/home-cliente']);
 
             } else {
-              this.router.navigate(['']);
+              this.router.navigate(['/list']);
             }
         },
         () => {

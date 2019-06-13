@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MenuController } from '@ionic/angular';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Loja } from '../model/loja';
 import * as firebase from 'firebase';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class HomePage {
     constructor(public router : Router,
                 private menu: MenuController,
                 private firebaseauth : AngularFireAuth,
-                public activatedRoute: ActivatedRoute, ){
+                public activatedRoute: ActivatedRoute){
         
       
     }

@@ -42,55 +42,10 @@ const routes: Routes = [
   
   { path: 'tribulus-list', loadChildren: './tribulus-list/tribulus-list.module#TribulusListPageModule' },
   
-  { path: 'bcaa-list', loadChildren: './bcaa-list/bcaa-list.module#BcaaListPageModule' },  { path: 'carrinho-page', loadChildren: './carrinho-page/carrinho-page.module#CarrinhoPagePageModule' },
+  { path: 'bcaa-list', loadChildren: './bcaa-list/bcaa-list.module#BcaaListPageModule' },
+  { path: 'carrinho-page', loadChildren: './carrinho-page/carrinho-page.module#CarrinhoPagePageModule' },
   { path: 'carrinho', loadChildren: './carrinho/carrinho.module#CarrinhoPageModule' }
 
-<<<<<<< HEAD
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'home',
-    pathMatch: 'full'
-  },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule',
-     
-
-  },
-  {
-    path: 'list',
-    loadChildren: './list/list.module#ListPageModule'
-  },
-  
-  { path: 'cadastro-de-loja', 
-  loadChildren: './cadastro-de-loja/cadastro-de-loja.module#CadastroDeLojaPageModule',
-  
-  },
-  
-  { path: 'cadastro-de-produto', 
-  loadChildren: './cadastro-de-produto/cadastro-de-produto.module#CadastroDeProdutoPageModule' },
-  
-  { path: 'loja-perfil', 
-  loadChildren: './loja-perfil/loja-perfil.module#LojaPerfilPageModule' },
-  
-  { path: 'logoff', 
-  loadChildren: './logoff/logoff.module#LogoffPageModule',
-  canActivate: [AuthGuard]
- },
-  { path: 'home-cliente', loadChildren: './home-cliente/home-cliente.module#HomeClientePageModule' },
-  
-  { path: 'whey-list', loadChildren: './whey-list/whey-list.module#WheyListPageModule' },
-  
-  { path: 'creatine-list', loadChildren: './creatine-list/creatine-list.module#CreatineListPageModule' },
-  
-  { path: 'tribulus-list', loadChildren: './tribulus-list/tribulus-list.module#TribulusListPageModule' },
-  
-  { path: 'bcaa-list', loadChildren: './bcaa-list/bcaa-list.module#BcaaListPageModule' },
-  
-  { path: 'imc', loadChildren: './imc/imc.module#ImcPageModule' }
-
-
 
 ];
 
@@ -101,16 +56,3 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule {}
-=======
-
-
-];
-
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
-  ],
-  exports: [RouterModule]
-})
-export class AppRoutingModule {}
->>>>>>> 5036b6ff4f5d391bdc347fe733d1ac80ba572a1d

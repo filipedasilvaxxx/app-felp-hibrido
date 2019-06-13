@@ -44,6 +44,7 @@ export class CadastroDeLojaPage implements OnInit {
   cadastrar(){
     this.cadastrarLogin();
     this.loading();
+    //let ref = this.firestore.collection('loja').doc("dfnidsafoin").set(this.formGroup.value)
     let ref = this.firestore.collection('loja')
     ref.add(this.formGroup.value)
       .then(() =>{
