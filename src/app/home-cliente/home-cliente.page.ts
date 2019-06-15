@@ -33,7 +33,14 @@ export class HomeClientePage implements OnInit {
 
                  ){
   
-        this.id = this.firebaseauth.auth.currentUser.uid;
+                  this.firebaseauth.authState.subscribe(obj=>{
+                    this.id = this.firebaseauth.auth.currentUser.uid;
+                    this.obterCliente();
+                    
+              
+                  });
+
+
       
       
     }
@@ -43,7 +50,16 @@ export class HomeClientePage implements OnInit {
 
   ngOnInit() {
     
-      //this.obterCliente();
+    
+
+    }
+
+    irCadastroLoja(){
+      this.router.navigate(['/cadastro-de-loja']);
+    }
+
+    lojaPerfil(obj : Loja){
+      this.router.navigate(['/loja-perfil', {'loja': this.id}]);
     }
 
     

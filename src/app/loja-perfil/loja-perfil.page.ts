@@ -5,6 +5,8 @@ import { Produto } from '../model/produto';
 import { FormGroup } from '@angular/forms';
 import { Loja } from '../model/loja';
 import { LoadingController } from '@ionic/angular';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-loja-perfil',
@@ -15,9 +17,11 @@ export class LojaPerfilPage implements OnInit {
 
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
+ 
   formGroup: FormGroup;
+
   loja : Loja = new Loja();
-  email: string;
+  id: string;
   
 
   listaLoja = [];
@@ -25,25 +29,38 @@ export class LojaPerfilPage implements OnInit {
 
   constructor(public activatedRoute: ActivatedRoute,
               public router : Router,
-              public loadingController: LoadingController) {
-    this.email = this.activatedRoute.snapshot.paramMap.get('loja');
-    
+              public loadingController: LoadingController,
+              private firebaseauth : AngularFireAuth,
+              private formBuilder: FormBuilder) {
+    this.id = this.activatedRoute.snapshot.paramMap.get('loja');
+    this.form();
+ 
+  }
+
+  form(){
+    this.formGroup = this.formBuilder.group({
+      nome : [this.loja.nome],
+      telefone : [this.loja.telefone],
+      email : [this.loja.email],
+      cnpj : [this.loja.cnpj],
+      endereco : [this.loja.endereco],
+    })
   }
 
   ngOnInit() {
-   
+      this.obterCliente();
+      this.downloadFoto();
+    
   }
 
   obterCliente() {
 
-    var ref = firebase.firestore().collection("loja").doc(this.email);
-    ref.get().then(doc => {
-      let c = new Loja();
-      c.setDados(doc.data());
-      
-      
-      this.listaLoja.push(c);
-      console.log(c.nome)   
+    var ref = firebase.firestore().collection("loja").doc(this.id);
+      ref.get().then(doc => {
+      this.loja.setDados(doc.data());
+      this.form();
+      console.log(this.loja);
+       
     }).catch(function (error) {
       console.log("Error getting document:", error);
     
@@ -51,12 +68,10 @@ export class LojaPerfilPage implements OnInit {
     });
   }
 
-  ionViewDidLoad(){
-    this.downloadFoto();
-  }
+
 
   cadastroDeProduto(){
-    this.router.navigate(['/cadastro-de-'])
+    this.router.navigate(['/cadastro-de-produto'])
   }
   
   enviaArquivo(event){

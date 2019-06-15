@@ -3,11 +3,14 @@
     <ion-img class="topo" style="width: 60px; height: 60px; right: 50px " src="../assets/1.png"></ion-img>
   </ion-toolbar>
   <ion-input (click)="logoff()">Sair</ion-input>
-  <ion-input *ngFor="let loja of listaPerfil">{{loja?.nome}}</ion-input>
+  <ion-input *ngIf="loja.nome!=undefined" (click)="lojaPerfil(loja)">{{loja?.nome}}</ion-input>
+  <ion-input *ngIf="loja.nome==undefined" (click)="irCadastroLoja()">Cadastre sua loja</ion-input>
+
+  
+
 </ion-header>
 
 <ion-content>
-
 
   <ion-slides pager="true" autoplay="true" style="width: 200px; height: 200px;"  [options]="slideOpts">
     <ion-slide>

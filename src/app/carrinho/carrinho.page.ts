@@ -21,6 +21,7 @@ export class CarrinhoPage implements OnInit {
 
   
    ngOnInit() {
+     
   }
 
 

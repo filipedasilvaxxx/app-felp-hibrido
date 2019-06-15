@@ -6,6 +6,7 @@ import { LoadingController, ToastController } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Loja } from '../model/loja';
+import { Categoria } from '../model/categoria';
 
 @Component({
   selector: 'app-cadastro-de-loja',
@@ -19,9 +20,11 @@ export class CadastroDeLojaPage implements OnInit {
 
   formGroup : FormGroup;
 
-
+  id : string;
   firestore = firebase.firestore();
   settings = {timestampsInSnapshots: true};
+  
+  
 
   constructor(private formBuilder: FormBuilder,
               public router: Router,
@@ -29,6 +32,13 @@ export class CadastroDeLojaPage implements OnInit {
               public toastController: ToastController,
               public fire: AngularFireAuth) {
     
+
+                this.fire.authState.subscribe(obj=>{
+                  
+                  this.id = this.fire.auth.currentUser.uid;
+         
+                });
+
     this.formGroup = this.formBuilder.group({
       nome : [''],
       telefone : [''],
@@ -39,26 +49,27 @@ export class CadastroDeLojaPage implements OnInit {
    }
 
   ngOnInit() {
+
+   
   }
 
   cadastrar(){
-    this.cadastrarLogin();
     this.loading();
     //let ref = this.firestore.collection('loja').doc("dfnidsafoin").set(this.formGroup.value)
-    let ref = this.firestore.collection('loja')
-    ref.add(this.formGroup.value)
-      .then(() =>{
+    let ref = this.firestore.collection('loja').doc(this.id)
+      .set(this.formGroup.value).then(() =>{
         console.log('Cadastrado com sucesso');
         this.router.navigate(['/loja-perfil']);
         this.loadingController.dismiss();
         this.toast('Cadastrado com sucesso');
-      }).catch((err)=>{
+      }).catch(err =>{
         console.log(err);
         this.loadingController.dismiss();
         this.toast('Erro ao cadastrar');
-      })      
+      })
   }
 
+  
   logar(){
     this.fire.auth.signInWithEmailAndPassword(this.email.value,this.senha.value)
       .then(()=>{

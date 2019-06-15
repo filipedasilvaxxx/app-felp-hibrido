@@ -36,10 +36,19 @@
       </ion-item>
     
     
+  
+      
+    
+  
       <ion-item>
-        <ion-label floating>Categoria</ion-label>
-        <ion-input formControlName="categoria" type="text"></ion-input>
+        <ion-label>Hair Color</ion-label>
+        <ion-select value="brown" okText="Okay" cancelText="Dismiss" formControlName="categoria" >
+
+          <ion-select-option *ngFor="let cat of listaCategoria" value="{{cat.nome}}">{{cat.nome}}</ion-select-option>
+
+        </ion-select>
       </ion-item>
+    
     </ion-list>
 
     <ion-button expand="full" (click)="cadastrar()">Cadastrar Produto</ion-button>

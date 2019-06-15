@@ -62,7 +62,7 @@ export class AppComponent {
             this.router.navigate(['/home-cliente']);
 
             } else {
-              this.router.navigate(['/list']);
+              this.router.navigate(['/']);
             }
         },
         () => {

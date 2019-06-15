@@ -5,23 +5,49 @@
 </ion-header>
 
 <ion-content>
-  <h1 *ngFor="let loja of listaLoja">{{loja.nome}}</h1>
-    
-  <img src="{{imagem}}">
+
+    <p *ngIf="loja.nome!=undefined">{{loja?.nome}}</p>
+    <ion-input (click)="cadastroDeProduto()">Cadastre seus Produtos</ion-input>
+
+    <img src="{{imagem}}">
 
     <ion-item>
         <input type="file" (change)="enviaArquivo($event)"/>
     </ion-item>
-    
- <p (click)="cadastro-de-produto">Cadastre seus Produtos</p>
 
- <ion-row *ngFor="let produto of listaDeProdutos">
-  <ion-col>
-    <ion-card>
-      <h1 orange>27</h1>
-      <p>A homolar</p>
-    </ion-card>
-  </ion-col>
-</ion-row>
+    <form [formGroup]="formGroup">
+
+      <ion-list>
+  
+        <ion-item>
+          <ion-label floating>Nome</ion-label>
+          <ion-input formControlName="nome" type="text"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label floating>Telefone</ion-label>
+          <ion-input formControlName="telefone" type="text"></ion-input>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label floating>E-mail</ion-label>
+          <ion-input formControlName="email" type="text"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>CNPJ</ion-label>
+          <ion-input formControlName="cnpj" type="text"></ion-input>
+        </ion-item>
+        
+        <ion-item>
+          <ion-label floating>Endereço</ion-label>
+          <ion-input formControlName="endereco" type="text"></ion-input>
+        </ion-item>
+
+      </ion-list>
+  
+      <ion-button expand="full" (click)="atualizar()">Atualizar</ion-button>
+  
+    </form>
 
 </ion-content>

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoadingController, ToastController, NavParams, NavController } from '@ionic/angular';
 import * as firebase from 'firebase';
 import { Produto } from '../model/produto';
+import { Categoria } from '../model/categoria';
 
 @Component({
   selector: 'app-cadastro-de-produto',
@@ -20,7 +21,7 @@ export class CadastroDeProdutoPage implements OnInit {
 
   imagem : string = "";
   
-
+  listaCategoria : Categoria[] = [];
 
 
   constructor(public formBuilder: FormBuilder,
@@ -44,6 +45,8 @@ export class CadastroDeProdutoPage implements OnInit {
 
   
   ngOnInit() {
+
+    this.getList();
   }
 
   cadastrar() {
@@ -62,6 +65,25 @@ export class CadastroDeProdutoPage implements OnInit {
        
       })
   }
+
+  getList() {
+    this.loading();
+
+    var ref = firebase.firestore().collection("categoria");
+    ref.get().then(query => {
+        query.forEach(doc => {
+          
+            let c = new Categoria();
+            c.setDados(doc.data());
+            this.listaCategoria.push(c);
+            
+        });
+       
+        this.loadingController.dismiss();
+    });
+
+  }
+
 
   enviaArquivo(event){
     let imagem = event.srcElement.files[0];
