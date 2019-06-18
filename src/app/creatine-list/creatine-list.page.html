@@ -5,5 +5,18 @@
 </ion-header>
 
 <ion-content>
+  
+  <ion-row > 
+    
+
+    <ion-col *ngFor="let creatina of listaCreatina">
+      <ion-card>
+        <ion-img style="width: 150px; height: 150px;" src="{{img}}"></ion-img>
+        <ion-button size="small">{{creatina?.nome}}</ion-button>
+        <ion-card-subtitle>{{creatina?.preco}}</ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
 
 </ion-content>

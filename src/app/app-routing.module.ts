@@ -43,8 +43,6 @@ const routes: Routes = [
   { path: 'tribulus-list', loadChildren: './tribulus-list/tribulus-list.module#TribulusListPageModule' },
   
   { path: 'bcaa-list', loadChildren: './bcaa-list/bcaa-list.module#BcaaListPageModule' },
- 
-  { path: 'carrinho-page', loadChildren: './carrinho-page/carrinho-page.module#CarrinhoPagePageModule' },
   
   { path: 'carrinho', loadChildren: './carrinho/carrinho.module#CarrinhoPageModule' },
   

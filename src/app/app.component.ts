@@ -14,11 +14,6 @@ import { AngularFireAuth } from '@angular/fire/auth';
 export class AppComponent {
   public appPages = [
     {
-      title: 'Inicio',
-      url: '/home',
-      icon: 'home'
-    },
-    {
       title: 'Cadastre sua Loja',
       url: '/cadastro-de-loja',
       icon: 'home'
@@ -31,6 +26,16 @@ export class AppComponent {
     {
       title: 'Bcaa',
       url: '/bcaa-list',
+      icon: 'home'
+    },
+    {
+      title: 'Lista Tribulus',
+      url: '/tribulus-list',
+      icon: 'home'
+    },
+    {
+      title: 'Lista Creatina',
+      url: '/creatine-list',
       icon: 'home'
     },
     
@@ -46,6 +51,11 @@ export class AppComponent {
     private router : Router
     
   ) {
+    this.initializeApp();
+  }
+
+  ngOnInit() {
+
     this.initializeApp();
   }
 

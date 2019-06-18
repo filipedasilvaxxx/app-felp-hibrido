@@ -5,6 +5,8 @@ import { LoadingController, ToastController, NavParams, NavController } from '@i
 import * as firebase from 'firebase';
 import { Produto } from '../model/produto';
 import { Categoria } from '../model/categoria';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-cadastro-de-produto',
@@ -21,6 +23,8 @@ export class CadastroDeProdutoPage implements OnInit {
 
   imagem : string = "";
   
+  id : string;
+  
   listaCategoria : Categoria[] = [];
 
 
@@ -28,17 +32,23 @@ export class CadastroDeProdutoPage implements OnInit {
     public router: Router,
     public loadingController: LoadingController,
     public toastController: ToastController,
-   
-    public navCtrl: NavController) {
+    public fire: AngularFireAuth,
+    public navCtrl: NavController,
+    public activatedRoute: ActivatedRoute) {
+      this.id = this.activatedRoute.snapshot.paramMap.get('loja');
 
-      this.firestore.settings(this.settings);
+      this.fire.authState.subscribe(obj=>{
+                  
+        this.id = this.fire.auth.currentUser.uid;
 
+      });
     this.formGroup = this.formBuilder.group({
       nome: [''],
       marca: [''],
       informacao: [''],
       codigo: [''],
       categoria: [''],
+      preco: [''],
       
     })
   }
@@ -52,9 +62,9 @@ export class CadastroDeProdutoPage implements OnInit {
   cadastrar() {
     this.loading();
 
-    let ref = this.firestore.collection('produto')
-    ref.add(this.formGroup.value)
-      .then(() => {
+    let ref = this.firestore.collection('produto').doc(this.id)
+      .set(this.formGroup.value).then(() =>{
+      
         console.log('Cadastrado com sucesso');
         this.router.navigate(['/loja-perfil']);
         this.loadingController.dismiss();
@@ -85,27 +95,7 @@ export class CadastroDeProdutoPage implements OnInit {
   }
 
 
-  enviaArquivo(event){
-    let imagem = event.srcElement.files[0];
-    //console.log(imagem.name);
-    let ref = firebase.storage().ref()
-                  .child(`produtos/${this.produto.id}.jpg`);
-    
-    ref.put(imagem).then(url=>{
-      console.log("Enviado com sucesso!");
-      this.downloadFoto();
-    })
-
-  }
-
-  downloadFoto(){
-    let ref = firebase.storage().ref()
-      .child(`produtos/${this.produto.id}.jpg`);
-
-      ref.getDownloadURL().then( url=>{ 
-        this.imagem = url;
-      })
-  }
+ 
 
   
   async loading() {

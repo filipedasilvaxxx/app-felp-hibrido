@@ -6,4 +6,17 @@
 
 <ion-content>
 
+  <ion-row > 
+    
+    <ion-col *ngFor="let tribulus of listaTribulus">
+      <ion-card>
+        <ion-img style="width: 150px; height: 150px;" src=""></ion-img>
+        <ion-button size="small">{{tribulus?.nome}}</ion-button>
+        <ion-card-subtitle>{{tribulus?.preco}}</ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+
+  </ion-row>
+
+
 </ion-content>

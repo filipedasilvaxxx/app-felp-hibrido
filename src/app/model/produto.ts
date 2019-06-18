@@ -6,6 +6,7 @@ export class Produto {
     informacao: string;
     codigo: string;
     categoria: string;
+    preco: string;
     img : string;
 
 
@@ -20,6 +21,7 @@ export class Produto {
         this.informacao = obj.informacao;
         this.codigo = obj.codigo;
         this.categoria =  obj.categoria;
+        this.preco =  obj.preco;
         
     }
 }

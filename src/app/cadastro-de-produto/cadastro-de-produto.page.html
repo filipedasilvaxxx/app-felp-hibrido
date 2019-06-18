@@ -35,15 +35,15 @@
         <ion-input formControlName="codigo" type="text"></ion-input>
       </ion-item>
     
-    
-  
-      
-    
-  
       <ion-item>
-        <ion-label>Hair Color</ion-label>
-        <ion-select value="brown" okText="Okay" cancelText="Dismiss" formControlName="categoria" >
-
+        <ion-label floating>Preço</ion-label>
+        <ion-input formControlName="preco" type="text" ></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Categoria</ion-label>
+        <ion-select value="brown" okText="Continuar" cancelText="Cancelar"  formControlName="categoria" >
+                                              //cancelText="Cancela"
           <ion-select-option *ngFor="let cat of listaCategoria" value="{{cat.nome}}">{{cat.nome}}</ion-select-option>
 
         </ion-select>

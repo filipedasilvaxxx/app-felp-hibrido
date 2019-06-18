@@ -23,6 +23,7 @@ export class LojaPerfilPage implements OnInit {
   loja : Loja = new Loja();
   id: string;
   
+  listaProdutosLoja : Produto[] = [];
 
   listaLoja = [];
   imagem : string = "";
@@ -34,6 +35,7 @@ export class LojaPerfilPage implements OnInit {
               private formBuilder: FormBuilder) {
     this.id = this.activatedRoute.snapshot.paramMap.get('loja');
     this.form();
+
  
   }
 
@@ -58,8 +60,9 @@ export class LojaPerfilPage implements OnInit {
     var ref = firebase.firestore().collection("loja").doc(this.id);
       ref.get().then(doc => {
       this.loja.setDados(doc.data());
+      this.loja.id = doc.id;
       this.form();
-      console.log(this.loja);
+      console.log(this.loja.id);
        
     }).catch(function (error) {
       console.log("Error getting document:", error);
@@ -68,10 +71,28 @@ export class LojaPerfilPage implements OnInit {
     });
   }
 
+  getList() {
+    this.loading();
+
+    var ref = firebase.firestore().collection("produto");
+    ref.get().then(query => {
+        query.forEach(doc => {
+          
+            let c = new Produto();
+            c.setDados(doc.data());
+            this.listaProdutosLoja.push(c);
+            
+        });
+       
+        this.loadingController.dismiss();
+    });
+
+  }
 
 
-  cadastroDeProduto(){
-    this.router.navigate(['/cadastro-de-produto'])
+
+  cadastroDeProduto(obj : Loja){
+    this.router.navigate(['/cadastro-de-produto', {'loja': obj}])
   }
   
   enviaArquivo(event){
