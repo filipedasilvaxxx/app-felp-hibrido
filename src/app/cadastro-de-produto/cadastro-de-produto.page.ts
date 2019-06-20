@@ -37,11 +37,7 @@ export class CadastroDeProdutoPage implements OnInit {
     public activatedRoute: ActivatedRoute) {
       this.id = this.activatedRoute.snapshot.paramMap.get('loja');
 
-      this.fire.authState.subscribe(obj=>{
-                  
-        this.id = this.fire.auth.currentUser.uid;
-
-      });
+      
     this.formGroup = this.formBuilder.group({
       nome: [''],
       marca: [''],
@@ -66,7 +62,7 @@ export class CadastroDeProdutoPage implements OnInit {
       .set(this.formGroup.value).then(() =>{
       
         console.log('Cadastrado com sucesso');
-        this.router.navigate(['/loja-perfil']);
+        
         this.loadingController.dismiss();
         
       }).catch(() => {
@@ -74,6 +70,7 @@ export class CadastroDeProdutoPage implements OnInit {
         this.loadingController.dismiss();
        
       })
+     
   }
 
   getList() {
@@ -91,6 +88,19 @@ export class CadastroDeProdutoPage implements OnInit {
        
         this.loadingController.dismiss();
     });
+
+  }
+
+  enviaArquivo(event){
+    let imagem = event.srcElement.files[0];
+    //console.log(imagem.name);
+    let ref = firebase.storage().ref()
+                    .child(`produtos/${this.id}.jpg`);
+    ref.put(imagem).then(url=>{
+      console.log('Enviado com Sucesso')
+      
+
+    })
 
   }
 

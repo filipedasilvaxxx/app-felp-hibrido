@@ -36,17 +36,30 @@ export class CreatineListPage implements OnInit {
           
             let c = new Produto();
             c.setDados(doc.data());
+            c.id = doc.id;
 
-              if(c.categoria == "creatina"){
+            let ref = firebase.storage().ref()
+            .child(`produtos/${doc.id}.jpg`);
+      
+            ref.getDownloadURL().then(url => {
+              c.img = url;
+
+             if(c.categoria == "creatina"){  
                 console.log(c);
-                this.listaCreatina.push(c);
+                this.listaCreatina.push(c)
+                
               }
+            }).catch(()=>{
+
+            })
 
       });
+ 
     });
   
   }
 
+  
   enviaArquivo(event){
     let imagem = event.srcElement.files[0];
     //console.log(imagem.name);

@@ -38,6 +38,11 @@ export class AppComponent {
       url: '/creatine-list',
       icon: 'home'
     },
+    {
+      title: 'busca',
+      url: '/busca',
+      icon: 'home'
+    },
     
   
   

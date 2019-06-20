@@ -6,7 +6,7 @@
 
 <ion-content>
 
-    <img src="{{imagem}}">
+    
 
     <ion-item>
         <input type="file" (change)="enviaArquivo($event)"/>
@@ -51,7 +51,8 @@
     
     </ion-list>
 
-    <ion-button expand="full" (click)="cadastrar()">Cadastrar Produto</ion-button>
+  
+    <input type="file" (change)="enviaArquivo($event)" (click)="cadastrar()"/>
   </form>
   
 </ion-content>
