@@ -8,6 +8,7 @@ export class Produto {
     categoria: string;
     preco: string;
     img : string;
+    endereco : string;
 
 
 

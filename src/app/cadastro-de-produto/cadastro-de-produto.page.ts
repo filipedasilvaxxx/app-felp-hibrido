@@ -25,13 +25,15 @@ export class CadastroDeProdutoPage implements OnInit {
   formGroup: FormGroup;
   produto = new Produto();
 
-  imagem : string = "";
-  loja : Loja = new Loja();
-  
-  id : string;
-  idFoto : string = "";
-  listaCategoria : Categoria[] = [];
+  imagem: string = "";
+  loja: Loja = new Loja();
 
+  endereco: string = "";
+  id: string;
+  idFoto: string = "";
+  listaCategoria: Categoria[] = [];
+
+  foto : string = "";
 
   constructor(public formBuilder: FormBuilder,
     public router: Router,
@@ -40,9 +42,14 @@ export class CadastroDeProdutoPage implements OnInit {
     public fire: AngularFireAuth,
     public navCtrl: NavController,
     public activatedRoute: ActivatedRoute) {
-      this.id = this.activatedRoute.snapshot.paramMap.get('loja');
-      console.log(this.id);
-      
+    this.id = this.activatedRoute.snapshot.paramMap.get('loja');
+    console.log(this.id);
+    this.enderecoLoja();
+    this.form();
+    
+  }
+
+  form(){
     this.formGroup = this.formBuilder.group({
       nome: [''],
       marca: [''],
@@ -51,97 +58,92 @@ export class CadastroDeProdutoPage implements OnInit {
       categoria: [''],
       img: [this.produto.img],
       preco: [''],
-      loja : [this.id],
-      endereco : [this.loja.endereco]
+      loja: [this.id],
+      endereco: [this.loja.endereco]
 
-      
+
     })
   }
 
-  
   ngOnInit() {
     this.getList();
-    this.enderecoLoja();
   }
 
   cadastrar() {
-   
+
     this.loading();
-   let ref = this.firestore.collection('produto')
+    let ref = this.firestore.collection('produto')
     ref.add(this.formGroup.value)
-      .then(resp =>{
+      .then(resp => {
         this.toast('Produto Cadastrada com sucesso');
-       // this.router.navigate(['/produtos']);
+        // this.router.navigate(['/produtos']);
         //this.loadingController.dismiss();
         // console.log(getList{{marcas.nome}});
         this.idFoto = resp.id;
-        if(this.idFoto == resp.id) {
-          this.enviaArquivo(event);
-        }
-       // this.router.navigate(['/envia-foto',  {'foto' : resp.id}] )
-       // console.log("ID: " + resp.id);
+        if (this.idFoto = resp.id) {
+          let ref = firebase.storage().ref()
+            .child(`produtos/${this.idFoto}.jpg`);
+          ref.put(this.imagem).then(url => {
+            console.log('Enviado com Sucesso')
 
-      }).catch(()=>{
+          })
+          
+        }
+
+        // this.router.navigate(['/envia-foto',  {'foto' : resp.id}] )
+        // console.log("ID: " + resp.id);
+
+      }).catch(() => {
         this.toast("Erro ao Cadastrar!");
         this.loadingController.dismiss();
       })
-     
+
   }
 
   enderecoLoja() {
     var ref = firebase.firestore().collection("loja").doc(this.id);
     ref.get().then(doc => {
-    this.loja.setDados(doc.data());
-    console.log(this.loja.endereco);
-    
+      this.loja.setDados(doc.data());
+      console.log(this.loja.endereco);
+      this.form();
     }).catch((error) => {
       console.log("Error getting document:", error);
-    
+
 
     });
-  }s
+  } s
+
+  pegarImagem(event) {
+     this.imagem = event.srcElement.files[0];
+    console.log(this.imagem);
+    if(this.imagem == event.srcElement.files[0]){
+      this.foto = this.imagem;
+    }
+
+
+  }
+
   
-  enviaArquivo(event){
-    let imagem = event.srcElement.files[0];
-    //console.log(imagem.name);
-    let ref = firebase.storage().ref()
-                    .child(`produtos/${this.idFoto}.jpg`);
-    ref.put(imagem).then(url=>{
-      console.log('Enviado com Sucesso')
-      
-
-    })
-
-  }
-
-  downloadFoto(){
-    let ref = firebase.storage().ref()
-      .child(`produtos/${this.produto.id}.jpg`);
-
-      ref.getDownloadURL().then( url=>{ 
-        this.imagem = url;
-      })
-  }
 
   getList() {
     this.loading();
 
     var ref = firebase.firestore().collection("categoria");
     ref.get().then(query => {
-        query.forEach(doc => {
-          
-            let c = new Categoria();
-            c.setDados(doc.data());
-            this.listaCategoria.push(c);
-            
-        });
-       
-        this.loadingController.dismiss();
+      query.forEach(doc => {
+
+        let c = new Categoria();
+        c.setDados(doc.data());
+        this.listaCategoria.push(c);
+
+      });
+
+      this.loadingController.dismiss();
     });
 
   }
 
-  
+
   async loading() {
     const loading = await this.loadingController.create({
       message: 'Carregando',
@@ -150,7 +152,7 @@ export class CadastroDeProdutoPage implements OnInit {
     await loading.present();
   }
 
-  async toast(msg : string) {
+  async toast(msg: string) {
     const toast = await this.toastController.create({
       message: msg,
       duration: 2000
@@ -158,6 +160,6 @@ export class CadastroDeProdutoPage implements OnInit {
     toast.present();
 
   }
-  
+
 
 }
