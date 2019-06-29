@@ -35,7 +35,7 @@ export class LojaPerfilPage implements OnInit {
               private formBuilder: FormBuilder) {
     this.id = this.activatedRoute.snapshot.paramMap.get('loja');
     this.form();
-
+                
  
   }
 
@@ -50,6 +50,8 @@ export class LojaPerfilPage implements OnInit {
   }
 
   ngOnInit() {
+    console.log('ok');
+       
       this.obterCliente();
       this.downloadFoto();
     
@@ -58,9 +60,11 @@ export class LojaPerfilPage implements OnInit {
   obterCliente() {
 
     var ref = firebase.firestore().collection("loja").doc(this.id);
+
       ref.get().then(doc => {
       this.loja.setDados(doc.data());
       this.loja.id = doc.id;
+
       this.form();
       console.log(this.loja.id);
        
@@ -92,7 +96,7 @@ export class LojaPerfilPage implements OnInit {
 
 
   cadastroDeProduto(obj : Loja){
-    this.router.navigate(['/cadastro-de-produto', {'loja': obj}])
+    this.router.navigate(['/cadastro-de-produto', {'loja': this.id}])
   }
   
   enviaArquivo(event){

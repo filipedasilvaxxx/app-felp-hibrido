@@ -7,11 +7,6 @@
 <ion-content>
 
     
-
-    <ion-item>
-        <input type="file" (change)="enviaArquivo($event)"/>
-    </ion-item>
-    
  <form [formGroup]="formGroup">
 
     <ion-list>
@@ -48,11 +43,16 @@
 
         </ion-select>
       </ion-item>
+
+      <ion-item>
+        <ion-icon name="images"></ion-icon>
+        <input type="file" (change)="enviaArquivo($event)" />
+      </ion-item>
     
     </ion-list>
 
   
-    <input type="file" (change)="enviaArquivo($event)" (click)="cadastrar()"/>
+    <ion-button expand="full" (click)="cadastrar()">Cadastre seu produto</ion-button>
   </form>
   
 </ion-content>

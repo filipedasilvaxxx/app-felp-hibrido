@@ -20,11 +20,13 @@ export class CadastroDeProdutoPage implements OnInit {
   formGroup: FormGroup;
   produto = new Produto();
 
-
   imagem : string = "";
+
+
+ 
   
   id : string;
-  
+  idFoto : string = "";
   listaCategoria : Categoria[] = [];
 
 
@@ -36,7 +38,7 @@ export class CadastroDeProdutoPage implements OnInit {
     public navCtrl: NavController,
     public activatedRoute: ActivatedRoute) {
       this.id = this.activatedRoute.snapshot.paramMap.get('loja');
-
+      console.log(this.id);
       
     this.formGroup = this.formBuilder.group({
       nome: [''],
@@ -44,7 +46,9 @@ export class CadastroDeProdutoPage implements OnInit {
       informacao: [''],
       codigo: [''],
       categoria: [''],
+      img: [this.produto.img],
       preco: [''],
+      loja : [this.id]
       
     })
   }
@@ -56,21 +60,46 @@ export class CadastroDeProdutoPage implements OnInit {
   }
 
   cadastrar() {
+   
     this.loading();
+   let ref = this.firestore.collection('produto')
+    ref.add(this.formGroup.value)
+      .then(resp =>{
+        this.toast('Produto Cadastrada com sucesso');
+       // this.router.navigate(['/produtos']);
+        //this.loadingController.dismiss();
+        // console.log(getList{{marcas.nome}});
+        this.idFoto = resp.id;
+        this.router.navigate(['/envia-foto',  {'foto' : resp.id}] )
+        console.log("ID: " + resp.id);
 
-    let ref = this.firestore.collection('produto').doc(this.id)
-      .set(this.formGroup.value).then(() =>{
-      
-        console.log('Cadastrado com sucesso');
-        
+      }).catch(()=>{
+        this.toast("Erro ao Cadastrar!");
         this.loadingController.dismiss();
-        
-      }).catch(() => {
-        console.log('Erro ao cadastrar');
-        this.loadingController.dismiss();
-       
       })
      
+  }
+  
+  enviaArquivo(event){
+    let imagem = event.srcElement.files[0];
+    //console.log(imagem.name);
+    let ref = firebase.storage().ref()
+                    .child(`produtos/${this.idFoto}.jpg`);
+    ref.put(imagem).then(url=>{
+      console.log('Enviado com Sucesso')
+      
+
+    })
+
+  }
+
+  downloadFoto(){
+    let ref = firebase.storage().ref()
+      .child(`produtos/${this.produto.id}.jpg`);
+
+      ref.getDownloadURL().then( url=>{ 
+        this.imagem = url;
+      })
   }
 
   getList() {
@@ -91,22 +120,6 @@ export class CadastroDeProdutoPage implements OnInit {
 
   }
 
-  enviaArquivo(event){
-    let imagem = event.srcElement.files[0];
-    //console.log(imagem.name);
-    let ref = firebase.storage().ref()
-                    .child(`produtos/${this.id}.jpg`);
-    ref.put(imagem).then(url=>{
-      console.log('Enviado com Sucesso')
-      
-
-    })
-
-  }
-
-
- 
-
   
   async loading() {
     const loading = await this.loadingController.create({
@@ -116,6 +129,14 @@ export class CadastroDeProdutoPage implements OnInit {
     await loading.present();
   }
 
+  async toast(msg : string) {
+    const toast = await this.toastController.create({
+      message: msg,
+      duration: 2000
+    });
+    toast.present();
+
+  }
   
 
 }

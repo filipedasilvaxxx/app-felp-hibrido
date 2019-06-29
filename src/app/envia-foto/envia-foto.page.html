@@ -1,0 +1,13 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>EnviaFoto</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-item>
+    <ion-icon name="images"></ion-icon>
+    <input type="file" (change)="enviaArquivo($event)" />
+    <ion-button (click)="enviaImagem()">Enviar imagem</ion-button>
+  </ion-item>
+</ion-content>

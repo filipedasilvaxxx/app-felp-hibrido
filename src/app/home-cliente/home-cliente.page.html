@@ -24,7 +24,7 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-searchbar type="Search" (change)="Pesquisa($event)"></ion-searchbar>
+  <ion-searchbar #textoBusca animated placeholder="Procurar" debounce="500" (ionChange)="busca()"></ion-searchbar>
 
 
   <ion-row>
