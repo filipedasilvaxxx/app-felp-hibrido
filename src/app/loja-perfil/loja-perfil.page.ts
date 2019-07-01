@@ -64,6 +64,7 @@ export class LojaPerfilPage implements OnInit {
       ref.get().then(doc => {
       this.loja.setDados(doc.data());
       this.loja.id = doc.id;
+      
 
       this.form();
       console.log(this.loja.id);

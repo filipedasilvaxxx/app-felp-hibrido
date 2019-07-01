@@ -29,7 +29,7 @@ export class EnviaFotoPage implements OnInit {
     let imagem = event.srcElement.files[0];
     //console.log(imagem.name);
     let ref = firebase.storage().ref()
-                    .child(`produtos/${this.id}.jpg`);
+    //                .child(`produtos/${this.id}.jpg`);
     ref.put(imagem).then(url=>{
       console.log('Enviado com Sucesso')
       

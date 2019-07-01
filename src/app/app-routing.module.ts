@@ -47,7 +47,8 @@ const routes: Routes = [
   { path: 'carrinho', loadChildren: './carrinho/carrinho.module#CarrinhoPageModule' },
   
   { path: 'imc', loadChildren: './imc/imc.module#ImcPageModule' },  { path: 'busca', loadChildren: './busca/busca.module#BuscaPageModule' },
-  { path: 'envia-foto', loadChildren: './envia-foto/envia-foto.module#EnviaFotoPageModule' }
+  { path: 'envia-foto', loadChildren: './envia-foto/envia-foto.module#EnviaFotoPageModule' },
+  { path: 'action', loadChildren: './action/action.module#ActionPageModule' }
 
 
 

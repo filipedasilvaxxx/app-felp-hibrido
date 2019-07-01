@@ -1,53 +1,56 @@
-<ion-header *ngFor="let loja of listaLoja">
-  <ion-toolbar>
-    <ion-title>{{loja.nome}}</ion-title>
-  </ion-toolbar>
-</ion-header>
+
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-back-button defaultHref="home-cliente"></ion-back-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
 
 <ion-content>
 
-    <p *ngIf="loja.nome!=undefined">{{loja?.nome}}</p>
-    <ion-input (click)="cadastroDeProduto()">Cadastre seus Produtos</ion-input>
+  <p *ngIf="loja.nome!=undefined">{{loja?.nome}}</p>
+  <ion-input (click)="cadastroDeProduto()">Cadastre seus Produtos</ion-input>
 
-    <img src="{{imagem}}">
+  <img src="{{imagem}}">
 
-    <ion-item>
-        <input type="file" (change)="enviaArquivo($event)"/>
-    </ion-item>
+  <ion-item>
+    <input type="file" (change)="enviaArquivo($event)" />
+  </ion-item>
 
-    <form [formGroup]="formGroup">
+  <form [formGroup]="formGroup">
 
-      <ion-list>
-  
-        <ion-item>
-          <ion-label floating>Nome</ion-label>
-          <ion-input formControlName="nome" type="text"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-          <ion-label floating>Telefone</ion-label>
-          <ion-input formControlName="telefone" type="text"></ion-input>
-        </ion-item>
-  
-        <ion-item>
-          <ion-label floating>E-mail</ion-label>
-          <ion-input formControlName="email" type="text"></ion-input>
-        </ion-item>
+    <ion-list>
 
-        <ion-item>
-          <ion-label floating>CNPJ</ion-label>
-          <ion-input formControlName="cnpj" type="text"></ion-input>
-        </ion-item>
-        
-        <ion-item>
-          <ion-label floating>Endereço</ion-label>
-          <ion-input formControlName="endereco" type="text"></ion-input>
-        </ion-item>
+      <ion-item>
+        <ion-label floating>Nome</ion-label>
+        <ion-input formControlName="nome" type="text"></ion-input>
+      </ion-item>
 
-      </ion-list>
-  
-      <ion-button expand="full" (click)="atualizar()">Atualizar</ion-button>
-  
-    </form>
+      <ion-item>
+        <ion-label floating>Telefone</ion-label>
+        <ion-input formControlName="telefone" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>E-mail</ion-label>
+        <ion-input formControlName="email" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>CNPJ</ion-label>
+        <ion-input formControlName="cnpj" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Endereço</ion-label>
+        <ion-input formControlName="endereco" type="text"></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <ion-button expand="full" (click)="atualizar()">Atualizar</ion-button>
+
+  </form>
 
 </ion-content>

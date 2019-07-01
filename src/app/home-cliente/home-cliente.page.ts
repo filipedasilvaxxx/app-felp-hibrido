@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MenuController, IonInfiniteScroll } from '@ionic/angular';
+import { MenuController, IonInfiniteScroll, ActionSheetController } from '@ionic/angular';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { Loja } from '../model/loja';
 import * as firebase from 'firebase';
@@ -34,7 +34,7 @@ export class HomeClientePage implements OnInit {
     constructor(public router : Router,
                 private menu: MenuController,
                 private firebaseauth : AngularFireAuth,
-
+                public actionSheetController: ActionSheetController
                  ){
   
                   this.firebaseauth.authState.subscribe(obj=>{
@@ -76,6 +76,8 @@ export class HomeClientePage implements OnInit {
       });
     }
 
+   
+
     busca(){
     console.log(this.textoBusca.value)
     
@@ -95,8 +97,7 @@ export class HomeClientePage implements OnInit {
             
               console.log(r);
               this.listaDeProduto.push(r);
-            
-
+              
           })
           
       } else {
@@ -107,6 +108,8 @@ export class HomeClientePage implements OnInit {
     
     //this.router.navigate(['/Produto', { 'filtro': "busca" }]);
   }
+
+  
 
   cadastrarLoja(){
   this.router.navigate(['/cadastro-de-loja']);
@@ -137,8 +140,9 @@ export class HomeClientePage implements OnInit {
        
     });
     
-    return "listaDeProduto"
   }
+
+  
   
   
 }

@@ -43,6 +43,11 @@ export class AppComponent {
       url: '/busca',
       icon: 'home'
     },
+    {
+      title: 'action',
+      url: '/action',
+      icon: 'home'
+    },
     
   
   

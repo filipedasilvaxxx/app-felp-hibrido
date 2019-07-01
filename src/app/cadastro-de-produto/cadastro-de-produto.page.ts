@@ -7,6 +7,8 @@ import { Produto } from '../model/produto';
 import { Categoria } from '../model/categoria';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ActivatedRoute } from '@angular/router';
+import { Loja } from '../model/loja';
+import { ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-cadastro-de-produto',
@@ -15,15 +17,16 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class CadastroDeProdutoPage implements OnInit {
 
+  @ViewChild("enviaFoto") enviaFoto;
+
+
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
   formGroup: FormGroup;
   produto = new Produto();
 
   imagem : string = "";
-
-
- 
+  loja : Loja = new Loja();
   
   id : string;
   idFoto : string = "";
@@ -48,15 +51,17 @@ export class CadastroDeProdutoPage implements OnInit {
       categoria: [''],
       img: [this.produto.img],
       preco: [''],
-      loja : [this.id]
+      loja : [this.id],
+      endereco : [this.loja.endereco]
+
       
     })
   }
 
   
   ngOnInit() {
-
     this.getList();
+    this.enderecoLoja();
   }
 
   cadastrar() {
@@ -70,8 +75,11 @@ export class CadastroDeProdutoPage implements OnInit {
         //this.loadingController.dismiss();
         // console.log(getList{{marcas.nome}});
         this.idFoto = resp.id;
-        this.router.navigate(['/envia-foto',  {'foto' : resp.id}] )
-        console.log("ID: " + resp.id);
+        if(this.idFoto == resp.id) {
+          this.enviaArquivo(event);
+        }
+       // this.router.navigate(['/envia-foto',  {'foto' : resp.id}] )
+       // console.log("ID: " + resp.id);
 
       }).catch(()=>{
         this.toast("Erro ao Cadastrar!");
@@ -79,6 +87,19 @@ export class CadastroDeProdutoPage implements OnInit {
       })
      
   }
+
+  enderecoLoja() {
+    var ref = firebase.firestore().collection("loja").doc(this.id);
+    ref.get().then(doc => {
+    this.loja.setDados(doc.data());
+    console.log(this.loja.endereco);
+    
+    }).catch((error) => {
+      console.log("Error getting document:", error);
+    
+
+    });
+  }s
   
   enviaArquivo(event){
     let imagem = event.srcElement.files[0];
