@@ -43,6 +43,7 @@ export class CadastroDeLojaPage implements OnInit {
       nome : [''],
       telefone : [''],
       email : [''],
+      senha : [''],
       cnpj : [''],
       endereco : [''],
     })

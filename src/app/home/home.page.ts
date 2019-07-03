@@ -4,6 +4,7 @@ import { MenuController } from '@ionic/angular';
 import { Loja } from '../model/loja';
 import * as firebase from 'firebase';
 import { AngularFireAuth } from '@angular/fire/auth';
+import { Produto } from '../model/produto';
 
 
 @Component({
@@ -13,6 +14,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 })
 export class HomePage {
   
+  @ViewChild("textoBusca") textoBusca;
+
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
   
@@ -20,6 +23,7 @@ export class HomePage {
   email : string;
 
   listaPerfil : Loja[] = []; 
+  listaDeProduto : Produto[] = [];
 
     constructor(public router : Router,
                 private menu: MenuController,
@@ -32,6 +36,38 @@ export class HomePage {
   ngOnInit() {
       
     }
+
+   busca(){
+    console.log(this.textoBusca.value)
+    
+    this.listaDeProduto = [];
+      var ref = firebase.firestore().collection("produto");
+      //ref.orderBy('nome').startAfter(this.textoBusca.value).get().then(doc=> {
+      ref.orderBy('nome').startAfter(this.textoBusca.value).endAt(this.textoBusca.value+'\uf8ff').get().then(doc=> {
+
+        if (doc.size>0) {
+          
+          doc.forEach(doc =>{
+
+            let r = new Produto();
+            r.setDados(doc.data());
+            r.id = doc.id;
+            
+            
+              console.log(r);
+              this.listaDeProduto.push(r);
+              
+          })
+          
+      } else {
+          // doc.data() will be undefined in this case
+          console.log("No such document!");
+      }
+      })
+    
+    //this.router.navigate(['/Produto', { 'filtro': "busca" }]);
+  }
+
    
 
   cadastrarLoja(){
