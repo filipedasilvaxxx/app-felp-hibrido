@@ -8,10 +8,12 @@
   
   <ion-row > 
     
+    <ion-searchbar #textoBusca animated placeholder="Procurar" debounce="500" (ionChange)="busca()" ></ion-searchbar>
 
-    <ion-col *ngFor="let creatina of listaCreatina">
-      <ion-card>
-        <ion-img style="width: 150px; height: 150px;" src="{{img}}"></ion-img>
+
+    <ion-col *ngFor="let creatina of listaCreatina" >
+      <ion-card >
+        <img width="80%" src="{{creatina?.img}}">
         <ion-button size="small">{{creatina?.nome}}</ion-button>
         <ion-card-subtitle>{{creatina?.preco}}</ion-card-subtitle>
       </ion-card>

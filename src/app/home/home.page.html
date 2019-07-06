@@ -26,6 +26,13 @@
       </ion-slides>
     
       <ion-searchbar #textoBusca animated placeholder="Procurar" debounce="500" (ionChange)="busca()" ></ion-searchbar>
+      
+      
+
+      <ion-col *ngIf="{{let busca of listaDeProduto">
+        <ion-img style="width: 150px; height: 150px;" src="{{img}}"></ion-img>
+        <ion-button size="small" (click)="whey()">{{buscar?.nome}}/ion-button>
+      </ion-col>
     
       <ion-row>
         <ion-col>

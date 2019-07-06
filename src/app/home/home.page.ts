@@ -22,6 +22,8 @@ export class HomePage {
   loja: Loja = new Loja();
   email : string;
 
+  produto: Produto = new Produto();
+
   listaPerfil : Loja[] = []; 
   listaDeProduto : Produto[] = [];
 
@@ -49,13 +51,14 @@ export class HomePage {
           
           doc.forEach(doc =>{
 
-            let r = new Produto();
-            r.setDados(doc.data());
-            r.id = doc.id;
+            this.produto = new Produto();
+            this.produto.setDados(doc.data());
+            this.produto.id = doc.id;
             
             
-              console.log(r);
-              this.listaDeProduto.push(r);
+              console.log(this.produto);
+              this.listaDeProduto.push(this.produto);
+              
               
           })
           
@@ -81,7 +84,7 @@ export class HomePage {
     this.router.navigate(['/whey-list']);
   }
   creatina(){
-    this.router.navigate(['/creatina-list']);
+    this.router.navigate(['/creatine-list']);
   }
   tribulus(){
     this.router.navigate(['/tribulus-list']);

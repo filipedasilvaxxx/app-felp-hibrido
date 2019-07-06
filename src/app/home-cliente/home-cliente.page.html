@@ -24,7 +24,7 @@
     </ion-slide>
   </ion-slides>
 
-  <ion-searchbar #textoBusca  placeholder="Procurar" debounce="500" (ionChange)="busca()" ></ion-searchbar>
+  <ion-searchbar #textoBusca animated placeholder="Procurar" debounce="500" (ionChange)="busca()"></ion-searchbar>
 
   <ion-row>
     <ion-col>
@@ -46,7 +46,7 @@
       <ion-col>
         <ion-card>
           <ion-img style="width: 150px; height: 150px;" src="../assets/7.png"></ion-img>
-          <ion-button size="small"> Creatine </ion-button>
+          <ion-button size="small" (click)="creatina()"> Creatine </ion-button>
         </ion-card>
       </ion-col>
   

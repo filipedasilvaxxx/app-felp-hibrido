@@ -85,6 +85,7 @@ export class CadastroDeProdutoPage implements OnInit {
             .child(`produtos/${this.idFoto}.jpg`);
           ref.put(this.imagem).then(url => {
             console.log('Enviado com Sucesso')
+            this.router.navigate(['/cadastro-de-produto']);
 
           })
           

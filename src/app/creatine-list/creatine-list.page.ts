@@ -9,76 +9,101 @@ import * as firebase from 'firebase';
 })
 export class CreatineListPage implements OnInit {
 
+  @ViewChild("textoBusca") textoBusca;
+
   firestore = firebase.firestore();
   settings = { timestampsInSnapshots: true };
 
   produto: Produto = new Produto();
 
-  nome : string = "";
+  nome: string = "";
 
-  imagem : string = "";
-
-  listaCreatina : Produto[] = [];
-
+  imagem: string = "";
+  idImagem : Produto[] = [];
   
+
+  id : string = "";
+  listaCreatina: Produto[] = [];
+
+
   constructor() { }
 
   ngOnInit() {
     this.obterCategoria();
-    this.downloadFoto();
   }
 
+
+  busca() {
+    console.log(this.textoBusca.value)
+
+    this.listaCreatina = [];
+    var ref = firebase.firestore().collection("roupas");
+
+    ref.orderBy('roupa').startAfter(this.textoBusca.value).endAt(this.textoBusca.value + '\uf8ff').get().then(doc => {
+
+      if (doc.size > 0) {
+
+        doc.forEach(doc => {
+
+          
+        let c = new Produto();
+        c.setDados(doc.data());
+        c.id = doc.id;
+
+          if (c.categoria == "creatina") {
+            console.log(c);
+            
+            let ref = firebase.storage().ref().child(`produtos/${doc.id}.jpg`).getDownloadURL().then(url => {
+              c.img = url;
+              this.listaCreatina.push(c)
+   
+            }).catch(err => {
+              this.listaCreatina.push(c);
+            })            
+            
+  
+          }
+       
+  
+        });
 
   obterCategoria() {
     var ref = firebase.firestore().collection("produto");
     ref.get().then(query => {
-        query.forEach(doc => {
+      query.forEach(doc => {
+
+        let c = new Produto();
+        c.setDados(doc.data());
+        c.id = doc.id;
+
+       
+
+        console.log(c.id);
+        
+
+        if (c.categoria == "creatina") {
+          console.log(c);
           
-            let c = new Produto();
-            c.setDados(doc.data());
-            c.id = doc.id;
+          let ref = firebase.storage().ref().child(`produtos/${doc.id}.jpg`).getDownloadURL().then(url => {
+            c.img = url;
+            this.listaCreatina.push(c)
+ 
+          }).catch(err => {
+            this.listaCreatina.push(c);
+          })            
+          
 
-            let ref = firebase.storage().ref()
-            .child(`produtos/${doc.id}.jpg`);
-      
-            ref.getDownloadURL().then(url => {
-              c.img = url;
-
-             if(c.categoria == "creatina"){  
-                console.log(c);
-                this.listaCreatina.push(c)
-                
-              }
-            }).catch(()=>{
-
-            })
+        }
+     
 
       });
- 
+
     });
+
+  }
+
   
-  }
 
-  
-  enviaArquivo(event){
-    let imagem = event.srcElement.files[0];
-    //console.log(imagem.name);
-    let ref = firebase.storage().ref()
-                  .child(`produtos/${this.produto.id}.jpg`);
-    
-    ref.put(imagem).then(url=>{
-      console.log("Enviado com sucesso!");
-      this.downloadFoto();
-    })
 
-  }
 
-  downloadFoto(){
-    let ref = firebase.storage().ref()
-      .child(`produtos/${this.produto.id}.jpg`);
-
-      ref.getDownloadURL().then( url=>{ 
-        this.imagem = url;
-      })
-  }
 }

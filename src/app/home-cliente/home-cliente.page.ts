@@ -97,9 +97,7 @@ export class HomeClientePage implements OnInit {
             
               console.log(r);
               this.listaDeProduto.push(r);
-              if(r.id == doc.id){
-                this.iniciaPesquisa();
-              }
+             
               
           })
           
@@ -112,10 +110,7 @@ export class HomeClientePage implements OnInit {
     //this.router.navigate(['/Produto', { 'filtro': "busca" }]);
   }
 
-  iniciaPesquisa(){
-    '<div ngIf="this.listaDeProduto"><p>{{this.listaDeProduto.nome}}</p></div>'
-
-  }
+ 
   
 
   cadastrarLoja(){
@@ -147,6 +142,10 @@ export class HomeClientePage implements OnInit {
        
     });
     
+  }
+
+  creatina(){
+    this.router.navigate(['/creatine-list']);
   }
 
   
