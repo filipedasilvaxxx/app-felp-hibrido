@@ -144,7 +144,7 @@ export class HomeClientePage implements OnInit {
     
   }
 
-  creatina(){
+  creatine(){
     this.router.navigate(['/creatine-list']);
   }
 
